@@ -7,6 +7,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
 import authRoutes from "./routes/authRoutes.js";
+import dealRoutes from "./routes/dealroutes.js";
+
 
 dotenv.config();
 const app = express();
@@ -21,7 +23,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the API");
 });
 app.use("/api/auth", authRoutes);
-
+app.use("/api/deals", dealRoutes);
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))

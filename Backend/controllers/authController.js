@@ -23,3 +23,15 @@ export const loginUser = async (req, res) => {
 };
 
 
+
+
+export const getSellers = async (req, res) => {
+  try {
+    const sellers = await User.find({ role: "seller" }).select("-password");
+    res.status(200).json(sellers);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch sellers" });
+  }
+};
+
+

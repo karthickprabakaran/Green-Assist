@@ -1,7 +1,7 @@
 import express from "express";
 import { registerUser, loginUser } from "../controllers/authController.js";
 import { log } from "console";
-
+import { getSellers } from "../controllers/authController.js";
 const router = express.Router();
 
 router.post("/register", registerUser);
@@ -17,5 +17,6 @@ router.get("/", (req, res) => {
   res.status(200).json({ message: "Auth route test2 is working!" });
 });
 
+router.get("/sellers", getSellers);
 
 export default router;
