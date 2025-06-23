@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_BASE_URL = "https://green-assist-jb0c.onrender.com";
+
 const ViewDeals = () => {
   const [deals, setDeals] = useState([]);
   const [error, setError] = useState("");
@@ -9,7 +11,7 @@ const ViewDeals = () => {
     const fetchDeals = async () => {
       try {
         setLoading(true);
-        const res = await fetch("https://green-assist-jb0c.onrender.com/api/deals/view");
+        const res = await fetch(`${API_BASE_URL}/api/deals/view`);
         const data = await res.json();
         setDeals(data);
       } catch (err) {

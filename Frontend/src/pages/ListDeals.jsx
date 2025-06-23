@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_BASE_URL = "https://green-assist-jb0c.onrender.com";
+
 const DealList = () => {
   const [deals, setDeals] = useState([]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/deals", {
+      .get(`${API_BASE_URL}/api/deals`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setDeals(res.data))
@@ -16,7 +18,7 @@ const DealList = () => {
 
   const updateStatus = async (id, action) => {
     try {
-      await axios.patch(`http://localhost:5001/api/deals/${id}/${action}`, {}, {
+      await axios.patch(`${API_BASE_URL}/api/deals/${id}/${action}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Deal Updated");
@@ -43,7 +45,7 @@ const DealList = () => {
               <button
                 onClick={() => {
                   const newPrice = prompt("Enter Counter Offer:");
-                  axios.patch(`http://localhost:5001/api/deals/${deal._id}/counter`, { counterPrice: newPrice }, {
+                  axios.patch(`${API_BASE_URL}/api/deals/${deal._id}/counter`, { counterPrice: newPrice }, {
                     headers: { Authorization: `Bearer ${token}` },
                   }).then(() => window.location.reload());
                 }}

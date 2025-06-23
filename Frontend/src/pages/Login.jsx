@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE_URL = "https://green-assist-jb0c.onrender.com";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +26,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://green-assist-jb0c.onrender.com/api/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

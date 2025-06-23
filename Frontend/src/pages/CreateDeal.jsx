@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_BASE_URL = "https://green-assist-jb0c.onrender.com";
+
 const CreateDeal = () => {
   const [form, setForm] = useState({
     title: "",
@@ -15,7 +17,7 @@ const CreateDeal = () => {
 
   useEffect(() => {
     axios
-      .get("https://green-assist-jb0c.onrender.com/api/auth/sellers")
+      .get(`${API_BASE_URL}/api/auth/sellers`)
       .then((res) => setSellers(res.data))
       .catch((err) => console.error("Failed to load sellers", err));
   }, []);
@@ -30,7 +32,7 @@ const CreateDeal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://green-assist-jb0c.onrender.com/api/deals", form);
+      await axios.post(`${API_BASE_URL}/api/deals`, form);
       alert("Deal Created Successfully");
       setForm({
         title: "",
