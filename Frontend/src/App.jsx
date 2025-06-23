@@ -8,7 +8,7 @@ import ViewDeals from './pages/ViewDeals.jsx'
 function App() {
   return (
     <div className='min-h-screen w-full'>
-      <ViewDeals />
+      <Register />
     </div>
   )
 }
