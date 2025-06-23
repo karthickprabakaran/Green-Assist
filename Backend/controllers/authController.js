@@ -12,12 +12,14 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  console.log("Logging in user:", req.body);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password)))
     return res.status(401).json({ message: "Invalid credentials" });
 
   res.status(200);
+  console.log("User logged in successfully:", user);
 };
 
 

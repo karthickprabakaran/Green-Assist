@@ -4,7 +4,7 @@ import Register from './pages/Register.jsx'
 function App() {
   return (
     <div className='min-h-screen w-full'>
-      <Register />
+      <Login />
     </div>
   )
 }
