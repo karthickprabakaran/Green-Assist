@@ -10,6 +10,13 @@ import authRoutes from "./routes/authRoutes.js";
 import dealRoutes from "./routes/dealroutes.js";
 
 
+// MongoDB Connect
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
+
+
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
@@ -24,10 +31,8 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/deals", dealRoutes);
-// MongoDB Connect
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+
+
 
 const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

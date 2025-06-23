@@ -15,7 +15,7 @@ const CreateDeal = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/auth/sellers")
+      .get("https://green-assist-jb0c.onrender.com/api/auth/sellers")
       .then((res) => setSellers(res.data))
       .catch((err) => console.error("Failed to load sellers", err));
   }, []);
@@ -30,7 +30,7 @@ const CreateDeal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5001/api/deals", form);
+      await axios.post("https://green-assist-jb0c.onrender.com/api/deals", form);
       alert("Deal Created Successfully");
       setForm({
         title: "",

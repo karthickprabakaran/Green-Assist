@@ -9,7 +9,7 @@ const ViewDeals = () => {
     const fetchDeals = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:5001/api/deals/view");
+        const res = await fetch("https://green-assist-jb0c.onrender.com/api/deals/view");
         const data = await res.json();
         setDeals(data);
       } catch (err) {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,7 +11,7 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -25,19 +25,30 @@ const Register = () => {
     setSuccess("");
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/api/auth/register", {
+      const response = await fetch("https://green-assist-jb0c.onrender.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "Registration failed");
       }
+
+      const data = await response.json();
+
+      // ✅ Store token in localStorage
+      localStorage.setItem("token", data.token || "dummyToken");
+
       setSuccess("Registration successful!");
-      // Optionally navigate to login or dashboard
+
+      // ✅ Redirect
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
     } catch (err) {
       setError(err.message || "Registration failed");
     } finally {
@@ -45,8 +56,10 @@ const Register = () => {
     }
   };
 
+
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br  from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute -top-40 -right-32 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -56,7 +69,7 @@ const Register = () => {
 
       <div className="relative w-full max-w-md">
         {/* Glassmorphism card */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-8 relative">
+        <div className="backdrop-blur-xl mt-20 bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-8 relative">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -240,7 +253,10 @@ const Register = () => {
           <div className="mt-8 text-center">
             <p className="text-blue-100/50 text-sm">
               Already have an account?{' '}
-              <button className="text-blue-300 hover:text-blue-200 font-semibold transition-colors">
+              <button
+                className="text-blue-300 hover:text-blue-200 font-semibold transition-colors"
+                onClick={() => navigate("/login")}
+              >
                 Sign in
               </button>
             </p>

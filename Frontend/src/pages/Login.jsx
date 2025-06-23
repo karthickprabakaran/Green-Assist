@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -22,7 +24,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5001/api/auth/login", {
+      const response = await fetch("https://green-assist-jb0c.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,8 +37,15 @@ const Login = () => {
         throw new Error(data.message || "Login failed");
       }
 
+      const data = await response.json();
+
+      // ✅ Store token in localStorage
+      localStorage.setItem("token", data.token || "dummyToken");
+
       console.log("Login successful");
-      // Navigate to dashboard or home if needed
+
+      // ✅ Navigate after login
+      navigate("/home");
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {
@@ -149,8 +158,6 @@ const Login = () => {
               </div>
             </div>
 
-
-
             {/* Submit Button */}
             <button
               type="button"
@@ -178,7 +185,10 @@ const Login = () => {
           <div className="mt-8 text-center">
             <p className="text-blue-100/50 text-sm">
               Don't have an account?{' '}
-              <button className="text-blue-300 hover:text-blue-200 font-semibold transition-colors">
+              <button
+                className="text-blue-300 hover:text-blue-200 font-semibold transition-colors"
+                onClick={() => navigate("/register")}
+              >
                 Sign up
               </button>
             </p>
